@@ -26,7 +26,7 @@
       (doall
        (dirs-walker #(swap! result conj (check-re file-name %)) 
                     path))
-       (remove empty? @result))))
+      (remove empty? @result))))
 
 (defn usage []
   (println "Usage: $ run.sh file_name path"))
