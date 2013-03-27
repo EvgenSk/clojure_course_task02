@@ -1,19 +1,21 @@
 (ns clojure-course-task02.core
   (:gen-class))
 
+(require '[clojure.java.io :as io])
+
 (defn ^{:doc "Recursively walks through folders from root and applies func to each item"}
   raw-dirs-walker [func root]
   (do
     (func root)
     (if (.isDirectory root)
-      (->> (file-seq root)
-           (rest)
-           (map #(raw-dirs-walker func %))))))
+      (->> (.listFiles root)
+           (vec)
+           (pmap #(raw-dirs-walker func %))))))
 
 (defn ^{:doc "Recursively walks through folders from root and applies func to each item-name"} 
   dirs-walker [func root]
   (raw-dirs-walker #(func (.getName %)) 
-                   (clojure.java.io/file root)))
+                   (io/file root)))
 
 (defn ^{:doc "Checks if regexp matches with name. If yes, returns name, otherwise returns nil"}  
   check-re [regexp name]
