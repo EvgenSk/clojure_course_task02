@@ -10,7 +10,6 @@
     (if (.isDirectory root)
       (->> (.listFiles root)
            (vec)
-           (lazy-seq)
            (pmap #(raw-dirs-walker func %))
            (doall)))))
 
