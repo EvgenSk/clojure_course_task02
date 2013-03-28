@@ -10,6 +10,7 @@
     (if (.isDirectory root)
       (->> (.listFiles root)
            (vec)
+           (lazy-seq)
            (pmap #(raw-dirs-walker func %))))))
 
 (defn ^{:doc "Recursively walks through folders from root and applies func to each item-name"} 
